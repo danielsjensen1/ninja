@@ -12,21 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-#include "build.h"
-#include "subprocess.h"
+#include "real_command_runner.h"
+#include <iostream>
+double RealCommandRunner::LoadAverage() const {
+  return GetLoadAverage();
+}
 
-struct RealCommandRunner : public CommandRunner {
-  explicit RealCommandRunner(const BuildConfig& config) : config_(config) {}
-  size_t CanRunMore() const override;
-  bool StartCommand(Edge* edge) override;
-  bool WaitForCommand(Result* result) override;
-  std::vector<Edge*> GetActiveEdges() override;
-  void Abort() override;
-
-  const BuildConfig& config_;
-  SubprocessSet subprocs_;
-  std::map<const Subprocess*, Edge*> subproc_to_edge_;
-};
+double RealCommandRunner::AvailableMemory() const {
+  return GetAvailableMemory();
+}
 
 std::vector<Edge*> RealCommandRunner::GetActiveEdges() {
   std::vector<Edge*> edges;
@@ -48,9 +42,14 @@ size_t RealCommandRunner::CanRunMore() const {
   int64_t capacity = config_.parallelism - subproc_number;
 
   if (config_.max_load_average > 0.0f) {
-    int load_capacity = config_.max_load_average - GetLoadAverage();
+    int load_capacity = config_.max_load_average - LoadAverage();
     if (load_capacity < capacity)
       capacity = load_capacity;
+  }
+
+  if (config_.min_available_memory > 0.0f) {
+    if (AvailableMemory() < config_.min_available_memory)
+      capacity = 0;
   }
 
   if (capacity < 0)

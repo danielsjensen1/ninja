@@ -66,6 +66,7 @@ _arguments \
   '-f+[Specify input build file (default=build.ninja)]:files:_files' \
   '-j+[Run N jobs in parallel (default=number of CPUs available)]:number of jobs' \
   '-l+[Do not start new jobs if the load average is greater than N]:number of jobs' \
+  '-m+[Do not start new jobs if the available system memory is less than N gigabytes' \
   '-k+[Keep going until N jobs fail (default=1)]:number of jobs' \
   '-n[Dry run (do not run commands but act like they succeeded)]' \
   '(-v --verbose --quiet)'{-v,--verbose}'[Show all command lines while building]' \

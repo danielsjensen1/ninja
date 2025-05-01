@@ -282,6 +282,7 @@ if(BUILD_TESTING)
     src/manifest_parser_test.cc
     src/missing_deps_test.cc
     src/ninja_test.cc
+    src/real_command_runner_test.cc
     src/state_test.cc
     src/string_piece_util_test.cc
     src/subprocess_test.cc

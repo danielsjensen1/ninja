@@ -102,6 +102,10 @@ int GetProcessorCount();
 /// on error.
 double GetLoadAverage();
 
+/// @return the amount of memory available on the machine in bytes.  A negative
+/// value is returned on error.
+double GetAvailableMemory();
+
 /// a wrapper for getcwd()
 std::string GetWorkingDirectory();
 

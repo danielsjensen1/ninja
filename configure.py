@@ -648,6 +648,7 @@ if gtest_src_dir:
         'lexer_test',
         'manifest_parser_test',
         'ninja_test',
+        'real_command_runner_test',
         'state_test',
         'string_piece_util_test',
         'subprocess_test',

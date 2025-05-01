@@ -918,6 +918,25 @@ double GetLoadAverage() {
 }
 #endif // _WIN32
 
+#if defined(_WIN32) || defined(__CYGWIN__)
+double GetAvailableMemory() {
+  MEMORYSTATUSEX memStatus;
+  memStatus.dwLength = sizeof(memStatus);
+  GlobalMemoryStatusEx(&memStatus);
+  return (double) memStatus.ullAvailPhys;
+}
+// double GetAvailableMemory() {
+//   return 0.0f;
+// }
+#else
+double GetAvailableMemory() {
+  struct sysinfo si;
+  if (sysinfo(&si) != 0)
+    return 0.0f;
+  return (double)(si.freeram + si.bufferram) * si.mem_unit;
+}
+#endif // _WIN32
+
 std::string GetWorkingDirectory() {
   std::string ret;
   char* success = NULL;
