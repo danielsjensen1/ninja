@@ -1644,7 +1644,7 @@ int ReadFlags(int* argc, char*** argv,
 
   int opt;
   while (!options->tool &&
-         (opt = getopt_long(*argc, *argv, "d:f:j:k:l:nt:vw:C:h", kLongOptions,
+         (opt = getopt_long(*argc, *argv, "d:f:j:k:l:m:nt:vw:C:h", kLongOptions,
                             NULL)) != -1) {
     switch (opt) {
       case 'd':
@@ -1690,7 +1690,7 @@ int ReadFlags(int* argc, char*** argv,
         char* end;
         double value = strtod(optarg, &end);
         if (end == optarg)
-          Fatal("-m parameter not numeric: did you mean -m 0?");
+          Fatal("-m parameter not numeric: did you mean -m 1.0?");
         config->min_available_memory = value * 1024 * 1024 * 1024;
         break;
       }
